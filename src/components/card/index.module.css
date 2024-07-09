@@ -1,0 +1,46 @@
+img {
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 320px;
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px gray;
+}
+
+.title {
+  display: flex;
+  gap: 5px;
+  align-items: end;
+}
+
+.title p {
+  font-weight: bold;
+}
+
+.color {
+  display: flex;
+  gap: 5px
+}
+
+.palette {
+  width: 30%;
+  border: 2px solid gray;
+}
+
+.price {
+  display: flex;
+  gap: 5px;
+  align-items: end;
+}
+
+.cost {
+  font-size: 20px;
+  font-weight: bolder;
+}
