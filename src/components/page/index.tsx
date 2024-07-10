@@ -11,7 +11,8 @@ import neutral from "../../images/neutral.png"
 const Page = () => {
 
   const [sortingType, setSortingType] = useState("default");
-  const [carList, setCarList] = useState<CarType[]>();
+  const [carList, setCarList] = useState<CarType[]>([]);
+  const [isEditable, setIsEditable] = useState(0)
   
   useEffect(() => {
     setTimeout(() => {
@@ -20,18 +21,21 @@ const Page = () => {
     }, 1000)
   }, [])
 
+  
   useEffect(() => {
-    if (carList) {
-      setCarList(sortingMethod(carList, sortingType))
-    }
+    setCarList(sortingMethod(carList, sortingType))
   }, [sortingType])
 
   const handleYearButton = () => {
-    sortingType === "yearAsc" ? setSortingType("yearDesc") : setSortingType("yearAsc")
+    sortingType === "yearAsc" ? 
+      setSortingType("yearDesc") 
+      : setSortingType("yearAsc")
   }
 
   const handlePriceButton= () => {
-    sortingType === "priceAsc" ? setSortingType("priceDesc") : setSortingType("priceAsc")
+    sortingType === "priceAsc" ? 
+      setSortingType("priceDesc") 
+      : setSortingType("priceAsc")
   }
 
   const handleDefaultButton = () => {
@@ -39,13 +43,20 @@ const Page = () => {
   }
 
   const handleDelete = (id: number) => {
-    if (carList) {
-      setCarList(carList.filter((item) => item.id !== id))
-    }
+    setCarList(carList.filter((item) => item.id !== id))
   }
 
   const handleEdit = (id: number) => {
-    
+    isEditable !== id ? setIsEditable(id) : setIsEditable(0)
+  }
+
+  const handleSubmit = (id: number, data: {name: string, model: string, price: string}) => {
+    setCarList(carList.map(car =>
+      car.id === id ? 
+        { ...car, name: data.name, model: data.model, price: Number(data.price) } 
+        : car
+    ));
+    setIsEditable(0)
   }
 
   return (
@@ -54,16 +65,26 @@ const Page = () => {
         <p>Сортировка:</p>
         <div className={classes.year} onClick={handleYearButton}>
           Год выпуска
-          <img className={classes.arrow} src={sortingType === "yearAsc" ? up : sortingType === "yearDesc" ? down : neutral} alt="arrow"></img>
+          <img 
+            className={classes.arrow} 
+            src={sortingType === "yearAsc" ? up : sortingType === "yearDesc" ? down : neutral} 
+            alt="arrow"
+            >
+          </img>
         </div>
         <div className={classes.cost} onClick={handlePriceButton}>
           Стоимость
-          <img className={classes.arrow} src={sortingType === "priceAsc" ? up : sortingType === "priceDesc" ? down : neutral} alt="arrow"></img>
+          <img 
+            className={classes.arrow} 
+            src={sortingType === "priceAsc" ? up : sortingType === "priceDesc" ? down : neutral} 
+            alt="arrow"
+            >
+          </img>
         </div>
         <div className={classes.default} onClick={handleDefaultButton}>По умолчанию</div>
       </div>
       <div className={classes.cardList}>
-        {carList?.length ? carList.map((car: CarType) => (
+        {carList.length ? carList.map((car: CarType) => (
           <Card
             key={car.id} 
             id={car.id} 
@@ -75,8 +96,11 @@ const Page = () => {
             latitude={car.latitude}
             longitude={car.longitude}
             handleDelete={handleDelete}
+            isEditable={isEditable}
+            handleEdit={handleEdit}
+            handleSubmit={handleSubmit}
             />
-        )): <>Загрузка...</>}
+        )) : <>Загрузка...</>}
       </div>
     </div>
   )

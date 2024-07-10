@@ -5,16 +5,19 @@ import edit from "../../images/edit.png"
 import map from "../../images/map.png"
 import { CarType } from "../../types"
 import EditForm from "../editForm"
-import { useState } from "react"
 
-interface CardProps extends CarType{
-  handleDelete: (id: number) => void
+interface CardProps extends CarType {
+  handleDelete: (id: number) => void,
+  isEditable: number,
+  handleEdit: (id: number) => void,
+  handleSubmit: (id: number, data: {name: string, model: string, price: string}) => void,
 }
 
-const Card = ({id, name, model, year, color, price, latitude, longitude, handleDelete}: CardProps) => {
+const Card = (
+  { id, name, model, year, color, price, latitude, longitude, 
+    handleDelete, isEditable, handleEdit, handleSubmit }: CardProps
+  ) => {
   
-  const [isEditable, setIsEditable] = useState(2)
-
   return (
     <div className={classes.card}>
       <img className={classes.autoImg} src={carImg} alt="car"></img>
@@ -34,14 +37,14 @@ const Card = ({id, name, model, year, color, price, latitude, longitude, handleD
         <div className={classes.menuButton}>
           <img src={map} alt="map"></img>
         </div>
-        <div className={classes.menuButton}>
+        <div className={classes.menuButton} onClick={() => handleEdit(id)}>
           <img src={edit} alt="edit"></img>
         </div>
         <div className={classes.menuButton} onClick={() => handleDelete(id)}>
           <img src={cross} alt="delete"></img>
         </div>
       </div>
-      {isEditable === id && <EditForm/>}
+      {isEditable === id && <EditForm id={id} handleSubmit={handleSubmit}/>}
       
     </div>
   )
