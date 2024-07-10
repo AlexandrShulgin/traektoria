@@ -22,34 +22,37 @@ const Page = () => {
   }, [])
 
   
+  //При изменении метода сортировки генерируется новый список
+  //Функция сортировки расположена "../../util/sort.ts"
   useEffect(() => {
     setCarList(sortingMethod(carList, sortingType))
   }, [sortingType])
 
+  //Сортировка по году
   const handleYearButton = () => {
     sortingType === "yearAsc" ? 
       setSortingType("yearDesc") 
       : setSortingType("yearAsc")
   }
-
+  //Сортировка по цене
   const handlePriceButton= () => {
     sortingType === "priceAsc" ? 
       setSortingType("priceDesc") 
       : setSortingType("priceAsc")
   }
-
+  //Сортировка по умолчанию(id)
   const handleDefaultButton = () => {
     setSortingType("default")
   }
-
+  //Удаление
   const handleDelete = (id: number) => {
     setCarList(carList.filter((item) => item.id !== id))
   }
-
+  //Открытие формы редактирования
   const handleEdit = (id: number) => {
     isEditable !== id ? setIsEditable(id) : setIsEditable(0)
   }
-
+  //Подтверждение редактирования
   const handleSubmit = (id: number, data: {name: string, model: string, price: string}) => {
     setCarList(carList.map(car =>
       car.id === id ? 
