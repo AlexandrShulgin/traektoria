@@ -1,4 +1,4 @@
-img {
+.autoImg {
   border: 2px solid gray;
   border-radius: 10px;
 }
@@ -17,7 +17,8 @@ img {
 .title {
   display: flex;
   gap: 5px;
-  align-items: end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title p {
@@ -30,7 +31,7 @@ img {
 }
 
 .palette {
-  width: 30%;
+  width: 19px;
   border: 2px solid gray;
 }
 
@@ -43,4 +44,32 @@ img {
 .cost {
   font-size: 20px;
   font-weight: bolder;
+}
+
+.menu {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.menuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  outline: 2px solid black;
+}
+
+.menuButton:active {
+  outline: 2px solid gray;
+}
+
+.menuButton img {
+  width: 20px;
+  height: 20px;
 }
