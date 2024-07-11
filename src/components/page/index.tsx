@@ -1,57 +1,58 @@
 import { useEffect, useState } from "react";
-import Card from "../card";
-import classes from "./index.module.css"
+import Card from "../Card";
+import classes from "./index.module.css";
 import fetchCars from "../../api/fetchCars";
 import { CarType } from "../../types";
 import sortingMethod from "../../util/sort";
 import down from "../../images/down.png";
-import up from "../../images/up.png"
-import neutral from "../../images/neutral.png"
+import up from "../../images/up.png";
+import neutral from "../../images/neutral.png";
 
 const Page = () => {
 
   const [sortingType, setSortingType] = useState("default");
   const [carList, setCarList] = useState<CarType[]>([]);
-  const [isEditable, setIsEditable] = useState(0)
+  const [isEditable, setIsEditable] = useState(0);
+  const [showMap, setShowMap] = useState(0);
   
   useEffect(() => {
     setTimeout(() => {
       fetchCars()
-      .then((res) => {setCarList(res)})
+      .then((res) => {setCarList(res)});
     }, 1000)
-  }, [])
+  }, []);
 
   
   //При изменении метода сортировки генерируется новый список
   //Функция сортировки расположена "../../util/sort.ts"
   useEffect(() => {
-    setCarList(sortingMethod(carList, sortingType))
-  }, [sortingType])
+    setCarList(sortingMethod(carList, sortingType));
+  }, [sortingType]);
 
   //Сортировка по году
   const handleYearButton = () => {
     sortingType === "yearAsc" ? 
       setSortingType("yearDesc") 
-      : setSortingType("yearAsc")
-  }
+      : setSortingType("yearAsc");
+  };
   //Сортировка по цене
   const handlePriceButton= () => {
     sortingType === "priceAsc" ? 
       setSortingType("priceDesc") 
-      : setSortingType("priceAsc")
-  }
+      : setSortingType("priceAsc");
+  };
   //Сортировка по умолчанию(id)
   const handleDefaultButton = () => {
-    setSortingType("default")
-  }
+    setSortingType("default");
+  };
   //Удаление
   const handleDelete = (id: number) => {
-    setCarList(carList.filter((item) => item.id !== id))
-  }
+    setCarList(carList.filter((item) => item.id !== id));
+  };
   //Открытие формы редактирования
   const handleEdit = (id: number) => {
-    isEditable !== id ? setIsEditable(id) : setIsEditable(0)
-  }
+    isEditable !== id ? setIsEditable(id) : setIsEditable(0);
+  };
   //Подтверждение редактирования
   const handleSubmit = (id: number, data: {name: string, model: string, price: string}) => {
     setCarList(carList.map(car =>
@@ -59,8 +60,12 @@ const Page = () => {
         { ...car, name: data.name, model: data.model, price: Number(data.price) } 
         : car
     ));
-    setIsEditable(0)
-  }
+    setIsEditable(0);
+  };
+
+  const handleShowMap = (id: number) => {
+    showMap !== id ? setShowMap(id) : setShowMap(0);
+  };
 
   return (
     <div className={classes.page}>
@@ -102,6 +107,8 @@ const Page = () => {
             isEditable={isEditable}
             handleEdit={handleEdit}
             handleSubmit={handleSubmit}
+            showMap={showMap}
+            handleShowMap={handleShowMap}
             />
         )) : <>Загрузка...</>}
       </div>

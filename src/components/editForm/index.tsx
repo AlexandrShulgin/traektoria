@@ -1,10 +1,10 @@
-import { FormEvent, useState } from "react"
-import classes from "./index.module.css"
+import { FormEvent, useState } from "react";
+import classes from "./index.module.css";
 
 interface EditProps {
   id: number,
   handleSubmit: (id: number, data: {name: string, model: string, price: string}) => void, 
-}
+};
 
 const EditForm = ({id, handleSubmit}: EditProps) => {
 
@@ -12,12 +12,12 @@ const EditForm = ({id, handleSubmit}: EditProps) => {
     name: "",
     model: "",
     price: "",
-  })
+  });
  
   const localSubmitHandler = (event: FormEvent) => {
-    event.preventDefault()
-    handleSubmit(id, fields)
-  }
+    event.preventDefault();
+    handleSubmit(id, fields);
+  };
 
   return (
     <form onSubmit={localSubmitHandler}>
@@ -50,4 +50,4 @@ const EditForm = ({id, handleSubmit}: EditProps) => {
   )
 }
 
-export default EditForm
+export default EditForm;

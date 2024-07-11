@@ -9,7 +9,7 @@ async function fetchCars() {
     }
 
     const json = await response.json();
-    return json
+    return json;
   } catch (error: any) {
     console.error(error.message);
   }

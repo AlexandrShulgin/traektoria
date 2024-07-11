@@ -1,0 +1,6 @@
+.Map img {
+  width: 275px;
+  height: 275px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
